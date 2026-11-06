@@ -40,7 +40,7 @@ jobs:
           sdkmanager="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
           test -x "$sdkmanager"
           (yes || true) | "$sdkmanager" --licenses >/dev/null
-          "$sdkmanager" "platforms;android-37" "build-tools;37.0.0"
+          "$sdkmanager" "platforms;android-37.0" "build-tools;37.0.0"
 
       - name: Build and test release
         shell: bash
