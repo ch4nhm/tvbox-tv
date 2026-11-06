@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="tvAccent" format="color" />
+    <attr name="tvAccentOn" format="color" />
+    <attr name="tvAccentLight" format="color" />
+    <attr name="tvAccentMid" format="color" />
+    <attr name="tvAccentDark" format="color" />
+    <attr name="tvAccentSoft" format="color" />
+    <attr name="tvAccentGlow" format="color" />
+
+    <declare-styleable name="RoundedFrameLayout">
+        <attr name="surfaceCornerRadius" format="dimension" />
+        <attr name="surfaceAspectRatio" format="float" />
+    </declare-styleable>
+</resources>

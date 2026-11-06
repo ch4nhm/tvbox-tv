@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Keep modern TVs inside a subtle safe area without a large left gutter. -->
+    <dimen name="content_margin">40dp</dimen>
+    <dimen name="nav_height">96dp</dimen>
+    <dimen name="hero_height">456dp</dimen>
+    <dimen name="section_header_height">62dp</dimen>
+    <dimen name="continue_card_width">190dp</dimen>
+    <dimen name="continue_image_height">108dp</dimen>
+    <dimen name="continue_row_height">174dp</dimen>
+    <dimen name="poster_card_min_width">154dp</dimen>
+    <dimen name="episode_card_min_width">100dp</dimen>
+    <dimen name="episode_gap">12dp</dimen>
+    <dimen name="poster_row_height">282dp</dimen>
+    <dimen name="poster_row_padding">10dp</dimen>
+    <dimen name="card_gap">18dp</dimen>
+    <dimen name="card_radius">14dp</dimen>
+    <dimen name="button_height">52dp</dimen>
+    <dimen name="hero_poster_width">204dp</dimen>
+    <dimen name="hero_poster_height">306dp</dimen>
+    <dimen name="detail_poster_width">150dp</dimen>
+    <dimen name="detail_poster_height">225dp</dimen>
+</resources>

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_app"
+    android:clipChildren="false">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/library_header"
+            android:layout_width="match_parent"
+            android:layout_height="88dp"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/content_margin"
+            android:paddingEnd="@dimen/content_margin">
+
+            <LinearLayout
+                android:id="@+id/library_title_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="30dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/library_title"
+                    style="@style/TextAppearance.TvApp.PageTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="我的片库" />
+
+                <TextView
+                    android:id="@+id/library_subtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="13sp"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <FrameLayout
+                android:id="@+id/library_tabs"
+                android:layout_width="wrap_content"
+                android:layout_height="56dp"
+                android:background="@drawable/bg_library_switcher"
+                android:clickable="true"
+                android:clipChildren="false"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:padding="4dp">
+
+                <View
+                    android:id="@+id/library_tab_indicator"
+                    android:layout_width="104dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/bg_library_tab_indicator"
+                    android:importantForAccessibility="no" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/library_favorites"
+                        android:layout_width="104dp"
+                        android:layout_height="48dp"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:gravity="center"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
+                        android:text="收藏"
+                        android:textColor="@color/library_tab_text"
+                        android:textSize="17sp" />
+
+                    <TextView
+                        android:id="@+id/library_history"
+                        android:layout_width="132dp"
+                        android:layout_height="48dp"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:gravity="center"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
+                        android:text="播放记录"
+                        android:textColor="@color/library_tab_text"
+                        android:textSize="17sp" />
+                </LinearLayout>
+            </FrameLayout>
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/library_clear"
+                android:layout_width="wrap_content"
+                android:layout_height="52dp"
+                android:background="@drawable/bg_button_secondary"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="center"
+                android:minWidth="92dp"
+                android:paddingStart="22dp"
+                android:paddingEnd="22dp"
+                android:text="清空"
+                android:textColor="@color/white"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/library_pan"
+                android:layout_width="wrap_content"
+                android:layout_height="52dp"
+                android:layout_marginStart="12dp"
+                android:background="@drawable/bg_button_secondary"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="center"
+                android:minWidth="132dp"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:text="网盘中心"
+                android:textColor="@color/white"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/library_settings"
+                android:layout_width="wrap_content"
+                android:layout_height="52dp"
+                android:layout_marginStart="12dp"
+                android:background="@drawable/bg_button_primary"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="center"
+                android:minWidth="96dp"
+                android:paddingStart="22dp"
+                android:paddingEnd="22dp"
+                android:text="设置"
+                android:textColor="?attr/tvAccentOn"
+                android:textSize="17sp" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/library_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:overScrollMode="never"
+                android:paddingStart="@dimen/content_margin"
+                android:paddingTop="14dp"
+                android:paddingEnd="@dimen/content_margin"
+                android:paddingBottom="28dp"
+                android:scrollbars="none" />
+
+            <LinearLayout
+                android:id="@+id/library_empty"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/library_empty_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:textColor="@color/text_primary"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/library_empty_hint"
+                    android:layout_width="1dp"
+                    android:layout_height="1dp"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </FrameLayout>
+    </LinearLayout>
+</FrameLayout>

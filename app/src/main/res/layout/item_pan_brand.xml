@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:foreground="@drawable/bg_focus_outline_pan">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/pan_card"
+        android:layout_width="match_parent"
+        android:layout_height="88dp"
+        android:clickable="false"
+        android:focusable="false"
+        app:cardBackgroundColor="@color/bg_elevated"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="0dp"
+        app:strokeWidth="0dp"
+        app:strokeColor="@android:color/transparent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="14dp"
+            android:paddingEnd="12dp">
+
+            <FrameLayout
+                android:id="@+id/pan_icon_frame"
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:background="@drawable/bg_pan_icon">
+
+                <TextView
+                    android:id="@+id/pan_icon"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="sans-serif-bold"
+                    android:gravity="center"
+                    android:textColor="?attr/tvAccent"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/pan_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:fontFamily="sans-serif-medium"
+                android:maxLines="1"
+                android:textColor="@color/text_primary"
+                android:textSize="19sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/pan_action"
+                android:layout_width="wrap_content"
+                android:layout_height="42dp"
+                android:layout_marginStart="12dp"
+                android:background="@drawable/bg_button_secondary"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:minWidth="80dp"
+                android:paddingStart="18dp"
+                android:paddingEnd="18dp"
+                android:text="管理"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+</FrameLayout>

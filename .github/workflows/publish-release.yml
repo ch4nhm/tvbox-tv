@@ -1,0 +1,113 @@
+name: Publish GitHub Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-github-release
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: gradle
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android SDK packages
+        shell: bash
+        run: |
+          set -euo pipefail
+          (yes || true) | sdkmanager --licenses >/dev/null
+          sdkmanager "platforms;android-37" "build-tools;37.0.0"
+
+      - name: Build and test release
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag="${GITHUB_REF_NAME}"
+          version="${tag#v}"
+          expected="$(sed -n "s/^[[:space:]]*versionName[[:space:]]*'\([^']*\)'.*/\1/p" \
+            app/build.gradle | head -n1)"
+          test "$version" = "$expected"
+          ./gradlew --no-daemon clean testDebugUnitTest assembleRelease
+          mkdir -p dist
+          cp app/build/outputs/apk/release/app-release.apk \
+            "dist/TVBox-${version}-release.apk"
+          (
+            cd dist
+            shasum -a 256 "TVBox-${version}-release.apk" \
+              > "TVBox-${version}-release.apk.sha256"
+            shasum -a 256 -c "TVBox-${version}-release.apk.sha256"
+          )
+
+      - name: Publish release
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag="${GITHUB_REF_NAME}"
+          version="${tag#v}"
+          apk="dist/TVBox-${version}-release.apk"
+          checksum="${apk}.sha256"
+          notes="docs/releases/${version}.md"
+          args=(
+            "$tag"
+            "$apk"
+            "$checksum"
+            --verify-tag
+            --title "TVBox ${version}"
+            --latest
+          )
+          if [ -f "$notes" ]; then
+            args+=(--notes-file "$notes")
+          else
+            args+=(--generate-notes)
+          fi
+          gh release create "${args[@]}"
+
+      - name: Verify published assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          version="${GITHUB_REF_NAME#v}"
+          release_json="$(gh release view "v${version}" \
+            --json tagName,url,isDraft,isPrerelease,publishedAt,assets)"
+          printf '%s\n' "$release_json" | python3 -c '
+          import json
+          import sys
+
+          version = sys.argv[1]
+          release = json.load(sys.stdin)
+          expected = {
+              f"TVBox-{version}-release.apk",
+              f"TVBox-{version}-release.apk.sha256",
+          }
+          actual = {asset["name"] for asset in release["assets"]}
+          if release["tagName"] != f"v{version}":
+              raise SystemExit("Release tag mismatch")
+          if release["isDraft"] or release["isPrerelease"]:
+              raise SystemExit("Release is not public/stable")
+          if not expected.issubset(actual):
+              raise SystemExit(f"Missing assets: {sorted(expected - actual)}")
+          print(json.dumps(release, ensure_ascii=False, indent=2, sort_keys=True))
+          ' "$version"

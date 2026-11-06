@@ -1,0 +1,1376 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <title>TVBox 设置</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f2f2f7;
+      --surface: rgba(255, 255, 255, 0.82);
+      --surface-solid: #ffffff;
+      --surface-raised: rgba(255, 255, 255, 0.96);
+      --label: #1d1d1f;
+      --secondary: #6e6e73;
+      --tertiary: #8e8e93;
+      --separator: rgba(60, 60, 67, 0.14);
+      --fill: rgba(118, 118, 128, 0.12);
+      --fill-strong: rgba(118, 118, 128, 0.2);
+      --accent: #0a84ff;
+      --accent-ink: #ffffff;
+      --danger: #ff3b30;
+      --success: #34c759;
+      --shadow: 0 18px 60px rgba(0, 0, 0, 0.08);
+      --hairline: 1px solid var(--separator);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+        "SF Pro Text", "PingFang SC", "Helvetica Neue", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    :root[data-theme="gold"] {
+      --accent: #48484a;
+      --accent-ink: #ffffff;
+    }
+
+    :root[data-theme="teal"] {
+      --accent: #25a9c2;
+      --accent-ink: #ffffff;
+    }
+
+    :root[data-theme="coral"] {
+      --accent: #ff6257;
+      --accent-ink: #ffffff;
+    }
+
+    :root[data-theme="blue"] {
+      --accent: #0a84ff;
+      --accent-ink: #ffffff;
+    }
+
+    :root[data-theme="green"] {
+      --accent: #28a978;
+      --accent-ink: #ffffff;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #000000;
+        --surface: rgba(28, 28, 30, 0.76);
+        --surface-solid: #1c1c1e;
+        --surface-raised: rgba(44, 44, 46, 0.97);
+        --label: #f5f5f7;
+        --secondary: #a1a1a6;
+        --tertiary: #8e8e93;
+        --separator: rgba(84, 84, 88, 0.58);
+        --fill: rgba(118, 118, 128, 0.24);
+        --fill-strong: rgba(118, 118, 128, 0.36);
+        --shadow: 0 22px 80px rgba(0, 0, 0, 0.48);
+      }
+
+      :root[data-theme="gold"] {
+        --accent: #f5f5f7;
+        --accent-ink: #050506;
+      }
+
+      :root[data-theme="teal"] {
+        --accent: #64d2ff;
+        --accent-ink: #061419;
+      }
+
+      :root[data-theme="coral"] {
+        --accent: #ff8a7a;
+        --accent-ink: #1a0805;
+      }
+
+      :root[data-theme="green"] {
+        --accent: #63e6be;
+        --accent-ink: #061713;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      min-height: 100%;
+      background: var(--bg);
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      color: var(--label);
+      background:
+        radial-gradient(circle at 84% -6%, color-mix(in srgb, var(--accent) 18%, transparent) 0, transparent 34rem),
+        radial-gradient(circle at 5% 18%, rgba(140, 140, 150, 0.1) 0, transparent 26rem),
+        var(--bg);
+      overflow-x: hidden;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      color: inherit;
+      border: 0;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      cursor: default;
+      opacity: 0.42;
+    }
+
+    button:focus-visible,
+    input:focus-visible {
+      outline: 3px solid color-mix(in srgb, var(--accent) 52%, transparent);
+      outline-offset: 3px;
+    }
+
+    .page {
+      width: min(100%, 760px);
+      margin: 0 auto;
+      padding:
+        max(34px, env(safe-area-inset-top))
+        max(18px, env(safe-area-inset-left))
+        calc(108px + env(safe-area-inset-bottom))
+        max(18px, env(safe-area-inset-right));
+    }
+
+    .hero {
+      padding: 18px 6px 28px;
+      animation: rise 560ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 20px;
+      color: var(--secondary);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .connection-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--success);
+      box-shadow: 0 0 0 5px color-mix(in srgb, var(--success) 13%, transparent);
+    }
+
+    .connection-dot.offline {
+      background: var(--danger);
+      box-shadow: 0 0 0 5px color-mix(in srgb, var(--danger) 13%, transparent);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(46px, 13vw, 68px);
+      font-weight: 760;
+      letter-spacing: -0.065em;
+      line-height: 0.95;
+    }
+
+    .hero-copy {
+      max-width: 570px;
+      margin: 18px 0 0;
+      color: var(--secondary);
+      font-size: 16px;
+      line-height: 1.55;
+      letter-spacing: -0.012em;
+    }
+
+    .device-line {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px 12px;
+      margin-top: 20px;
+      color: var(--tertiary);
+      font-size: 12px;
+      font-weight: 550;
+    }
+
+    .device-pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 5px 11px;
+      border: var(--hairline);
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--surface-solid) 52%, transparent);
+    }
+
+    .section {
+      margin: 0 0 30px;
+      animation: rise 600ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    }
+
+    .section:nth-of-type(2) { animation-delay: 60ms; }
+    .section:nth-of-type(3) { animation-delay: 110ms; }
+    .section:nth-of-type(4) { animation-delay: 160ms; }
+    .section:nth-of-type(5) { animation-delay: 210ms; }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 0 6px 11px;
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: 21px;
+      font-weight: 720;
+      letter-spacing: -0.035em;
+    }
+
+    .section-note {
+      margin: 5px 0 0;
+      color: var(--secondary);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .section-action {
+      flex: none;
+      padding: 7px 0;
+      color: var(--accent);
+      background: transparent;
+      font-size: 14px;
+      font-weight: 620;
+    }
+
+    .card {
+      overflow: hidden;
+      border: var(--hairline);
+      border-radius: 25px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      -webkit-backdrop-filter: blur(28px) saturate(145%);
+      backdrop-filter: blur(28px) saturate(145%);
+    }
+
+    .row {
+      display: flex;
+      min-height: 66px;
+      align-items: center;
+      gap: 16px;
+      padding: 13px 17px;
+    }
+
+    .row + .row {
+      border-top: var(--hairline);
+    }
+
+    .row-copy {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .row-title {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 570;
+      line-height: 1.35;
+      letter-spacing: -0.015em;
+    }
+
+    .row-help {
+      margin: 3px 0 0;
+      color: var(--secondary);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .switch {
+      position: relative;
+      width: 51px;
+      height: 31px;
+      flex: none;
+      border-radius: 999px;
+      background: var(--fill-strong);
+      transition: background 180ms ease, transform 140ms ease;
+    }
+
+    .switch::after {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 27px;
+      height: 27px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 2px 7px rgba(0, 0, 0, 0.2);
+      content: "";
+      transition: transform 210ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .switch[aria-checked="true"] {
+      background: var(--accent);
+    }
+
+    .switch[aria-checked="true"]::after {
+      transform: translateX(20px);
+    }
+
+    .switch:active {
+      transform: scale(0.96);
+    }
+
+    .segmented {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 3px;
+      min-width: 196px;
+      padding: 3px;
+      border-radius: 11px;
+      background: var(--fill);
+    }
+
+    .segmented button {
+      min-height: 31px;
+      padding: 4px 9px;
+      border-radius: 8px;
+      color: var(--secondary);
+      background: transparent;
+      font-size: 12px;
+      font-weight: 590;
+      white-space: nowrap;
+      transition: color 150ms ease, background 150ms ease, box-shadow 150ms ease;
+    }
+
+    .segmented button.selected {
+      color: var(--label);
+      background: var(--surface-raised);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+    }
+
+    .sources {
+      display: grid;
+      gap: 10px;
+      overflow: visible;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+
+    .source-card {
+      padding: 17px;
+      border: var(--hairline);
+      border-radius: 22px;
+      background: var(--surface);
+      box-shadow: 0 9px 34px rgba(0, 0, 0, 0.045);
+      -webkit-backdrop-filter: blur(26px) saturate(140%);
+      backdrop-filter: blur(26px) saturate(140%);
+    }
+
+    .source-card.active {
+      border-color: color-mix(in srgb, var(--accent) 48%, var(--separator));
+      box-shadow: 0 12px 38px color-mix(in srgb, var(--accent) 10%, transparent);
+    }
+
+    .source-head {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .source-index {
+      display: grid;
+      width: 36px;
+      height: 36px;
+      flex: none;
+      place-items: center;
+      border-radius: 12px;
+      color: var(--secondary);
+      background: var(--fill);
+      font-size: 11px;
+      font-weight: 720;
+      letter-spacing: 0.06em;
+    }
+
+    .source-card.active .source-index {
+      color: var(--accent-ink);
+      background: var(--accent);
+    }
+
+    .source-name {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 650;
+      letter-spacing: -0.022em;
+      overflow-wrap: anywhere;
+    }
+
+    .source-url {
+      margin: 5px 0 0;
+      color: var(--secondary);
+      font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+      font-size: 11px;
+      line-height: 1.55;
+      overflow-wrap: anywhere;
+    }
+
+    .badge {
+      flex: none;
+      padding: 5px 9px;
+      border-radius: 999px;
+      color: var(--secondary);
+      background: var(--fill);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    .source-card.active .badge {
+      color: var(--accent);
+      background: color-mix(in srgb, var(--accent) 14%, transparent);
+    }
+
+    .source-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 15px;
+      padding-top: 14px;
+      border-top: var(--hairline);
+    }
+
+    .small-button {
+      min-height: 34px;
+      padding: 7px 13px;
+      border-radius: 10px;
+      color: var(--label);
+      background: var(--fill);
+      font-size: 12px;
+      font-weight: 630;
+    }
+
+    .small-button.primary {
+      color: var(--accent-ink);
+      background: var(--accent);
+    }
+
+    .small-button.danger {
+      color: var(--danger);
+    }
+
+    .empty {
+      padding: 28px 20px;
+      color: var(--secondary);
+      text-align: center;
+      font-size: 13px;
+    }
+
+    .theme-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 6px;
+      padding: 17px;
+    }
+
+    .theme-option {
+      display: grid;
+      justify-items: center;
+      gap: 9px;
+      padding: 8px 2px;
+      border-radius: 15px;
+      background: transparent;
+      color: var(--secondary);
+      font-size: 11px;
+      font-weight: 570;
+      transition: background 160ms ease, color 160ms ease;
+    }
+
+    .theme-option.selected {
+      color: var(--label);
+      background: var(--fill);
+    }
+
+    .theme-dot {
+      width: 34px;
+      height: 34px;
+      border: 4px solid var(--surface-solid);
+      border-radius: 50%;
+      box-shadow: 0 0 0 1px var(--separator), 0 4px 12px rgba(0, 0, 0, 0.14);
+    }
+
+    .theme-option.selected .theme-dot {
+      box-shadow: 0 0 0 2px var(--accent), 0 5px 14px rgba(0, 0, 0, 0.16);
+    }
+
+    .live-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .live-icon {
+      display: grid;
+      width: 42px;
+      height: 42px;
+      flex: none;
+      place-items: center;
+      border-radius: 13px;
+      color: var(--accent-ink);
+      background: var(--accent);
+      font-size: 14px;
+      font-weight: 750;
+    }
+
+    .live-names {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 9px;
+    }
+
+    .live-name {
+      padding: 4px 8px;
+      border-radius: 8px;
+      color: var(--secondary);
+      background: var(--fill);
+      font-size: 10px;
+    }
+
+    .skeleton {
+      min-height: 120px;
+      border-radius: 24px;
+      background: linear-gradient(100deg, var(--fill) 20%, var(--fill-strong) 45%, var(--fill) 70%);
+      background-size: 220% 100%;
+      animation: shimmer 1.4s linear infinite;
+    }
+
+    .footer-note {
+      padding: 6px 14px 0;
+      color: var(--tertiary);
+      text-align: center;
+      font-size: 11px;
+      line-height: 1.55;
+    }
+
+    .toast {
+      position: fixed;
+      z-index: 80;
+      left: 50%;
+      bottom: calc(25px + env(safe-area-inset-bottom));
+      width: max-content;
+      max-width: min(90vw, 520px);
+      padding: 11px 17px;
+      border: var(--hairline);
+      border-radius: 999px;
+      color: var(--label);
+      background: var(--surface-raised);
+      box-shadow: 0 14px 45px rgba(0, 0, 0, 0.2);
+      font-size: 13px;
+      font-weight: 590;
+      text-align: center;
+      opacity: 0;
+      pointer-events: none;
+      transform: translate(-50%, 16px) scale(0.96);
+      transition: opacity 180ms ease, transform 240ms cubic-bezier(0.2, 0.9, 0.2, 1);
+      -webkit-backdrop-filter: blur(24px) saturate(160%);
+      backdrop-filter: blur(24px) saturate(160%);
+    }
+
+    .toast.visible {
+      opacity: 1;
+      transform: translate(-50%, 0) scale(1);
+    }
+
+    .sheet-layer {
+      position: fixed;
+      z-index: 100;
+      inset: 0;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 14px;
+      background: rgba(0, 0, 0, 0.34);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 200ms ease;
+      -webkit-backdrop-filter: blur(6px);
+      backdrop-filter: blur(6px);
+    }
+
+    .sheet-layer.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .sheet {
+      width: min(100%, 660px);
+      max-height: min(88vh, 780px);
+      overflow: auto;
+      border: var(--hairline);
+      border-radius: 30px;
+      background: var(--surface-raised);
+      box-shadow: 0 26px 90px rgba(0, 0, 0, 0.34);
+      transform: translateY(32px) scale(0.98);
+      transition: transform 300ms cubic-bezier(0.2, 0.85, 0.25, 1);
+    }
+
+    .sheet-layer.open .sheet {
+      transform: translateY(0) scale(1);
+    }
+
+    .sheet-grabber {
+      width: 38px;
+      height: 5px;
+      margin: 9px auto 2px;
+      border-radius: 999px;
+      background: var(--fill-strong);
+    }
+
+    .sheet-content {
+      padding: 18px 20px calc(20px + env(safe-area-inset-bottom));
+    }
+
+    .sheet-title {
+      margin: 2px 0 0;
+      font-size: 26px;
+      font-weight: 740;
+      letter-spacing: -0.045em;
+    }
+
+    .sheet-copy {
+      margin: 7px 0 20px;
+      color: var(--secondary);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .field {
+      display: block;
+      margin: 0 0 14px;
+    }
+
+    .field-label {
+      display: block;
+      margin: 0 0 7px 3px;
+      color: var(--secondary);
+      font-size: 12px;
+      font-weight: 610;
+    }
+
+    .field input {
+      width: 100%;
+      min-height: 50px;
+      padding: 12px 14px;
+      border: 1px solid transparent;
+      border-radius: 14px;
+      outline: 0;
+      color: var(--label);
+      background: var(--fill);
+      font-size: 15px;
+      transition: border 150ms ease, background 150ms ease;
+    }
+
+    .field input:focus {
+      border-color: color-mix(in srgb, var(--accent) 58%, transparent);
+      background: var(--surface-solid);
+    }
+
+    .sheet-toggle {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 4px 0 20px;
+      padding: 13px 14px;
+      border-radius: 14px;
+      background: var(--fill);
+    }
+
+    .sheet-toggle .row-copy {
+      flex: 1;
+    }
+
+    .sheet-actions {
+      display: grid;
+      grid-template-columns: 1fr 1.35fr;
+      gap: 9px;
+    }
+
+    .large-button {
+      min-height: 50px;
+      padding: 12px 16px;
+      border-radius: 14px;
+      color: var(--label);
+      background: var(--fill);
+      font-size: 14px;
+      font-weight: 670;
+    }
+
+    .large-button.primary {
+      color: var(--accent-ink);
+      background: var(--accent);
+    }
+
+    .large-button.destructive {
+      color: #fff;
+      background: var(--danger);
+    }
+
+    .confirm-icon {
+      display: grid;
+      width: 50px;
+      height: 50px;
+      margin-bottom: 16px;
+      place-items: center;
+      border-radius: 50%;
+      color: var(--danger);
+      background: color-mix(in srgb, var(--danger) 13%, transparent);
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes shimmer {
+      from { background-position: 110% 0; }
+      to { background-position: -110% 0; }
+    }
+
+    @media (max-width: 500px) {
+      .page {
+        padding-top: max(26px, env(safe-area-inset-top));
+      }
+
+      .hero {
+        padding-top: 9px;
+      }
+
+      .row {
+        align-items: flex-start;
+      }
+
+      .row.stack-mobile {
+        display: block;
+      }
+
+      .row.stack-mobile .segmented {
+        width: 100%;
+        min-width: 0;
+        margin-top: 12px;
+      }
+
+      .theme-grid {
+        grid-template-columns: repeat(5, minmax(48px, 1fr));
+        padding: 13px 10px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <div class="eyebrow">
+        <span class="connection-dot offline" id="connectionDot"></span>
+        <span id="connectionText">正在连接电视</span>
+      </div>
+      <h1>设置</h1>
+      <p class="hero-copy">片源、播放与外观，在手机上一次调好。所有更改会直接同步到电视。</p>
+      <div class="device-line">
+        <span class="device-pill" id="deviceName">TVBox</span>
+        <span class="device-pill" id="versionName">读取版本中</span>
+        <span>同一局域网 · 本次连接有效</span>
+      </div>
+    </header>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">TVBox 片源</h2>
+          <p class="section-note">管理多套配置，启用前会在电视上校验。</p>
+        </div>
+        <button class="section-action" id="addSourceButton" type="button">添加</button>
+      </div>
+      <div class="sources" id="sourceList">
+        <div class="skeleton"></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">播放</h2>
+          <p class="section-note">电视与手机播放页共用这些偏好。</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="row">
+          <div class="row-copy">
+            <p class="row-title">自动连播下一集</p>
+            <p class="row-help">当前剧集结束后继续播放。</p>
+          </div>
+          <button class="switch" id="autoNextSwitch" type="button" role="switch" aria-checked="false"></button>
+        </div>
+        <div class="row">
+          <div class="row-copy">
+            <p class="row-title">从上次进度续播</p>
+            <p class="row-help">打开内容时回到上次离开的位置。</p>
+          </div>
+          <button class="switch" id="resumeSwitch" type="button" role="switch" aria-checked="false"></button>
+        </div>
+        <div class="row stack-mobile">
+          <div class="row-copy">
+            <p class="row-title">快进 / 快退步长</p>
+            <p class="row-help">遥控器左右键的跳转距离。</p>
+          </div>
+          <div class="segmented" id="seekSegment">
+            <button type="button" data-value="10">10 秒</button>
+            <button type="button" data-value="30">30 秒</button>
+            <button type="button" data-value="60">60 秒</button>
+          </div>
+        </div>
+        <div class="row stack-mobile">
+          <div class="row-copy">
+            <p class="row-title">画面比例</p>
+            <p class="row-help">针对非标准比例片源调整显示。</p>
+          </div>
+          <div class="segmented" id="scaleSegment">
+            <button type="button" data-value="0">适应</button>
+            <button type="button" data-value="1">裁切</button>
+            <button type="button" data-value="2">拉伸</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="row-copy">
+            <p class="row-title">解码失败自动软解</p>
+            <p class="row-help">硬件解码异常时自动切换兼容模式。</p>
+          </div>
+          <button class="switch" id="decoderSwitch" type="button" role="switch" aria-checked="false"></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">外观</h2>
+          <p class="section-note">强调色会同步到焦点、进度与状态。</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="theme-grid" id="themeGrid"></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">直播</h2>
+          <p class="section-note">直播源由当前 TVBox 配置提供。</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="row live-row">
+          <div class="live-icon">LIVE</div>
+          <div class="row-copy">
+            <p class="row-title" id="liveTitle">读取直播源中</p>
+            <p class="row-help">在电视的“设置 · 直播”中浏览频道。</p>
+            <div class="live-names" id="liveNames"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <p class="footer-note">关闭电视上的二维码后，此页面会自动失效。请勿将链接分享给他人。</p>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <div class="sheet-layer" id="sourceSheet" aria-hidden="true">
+    <section class="sheet" role="dialog" aria-modal="true" aria-labelledby="sourceSheetTitle">
+      <div class="sheet-grabber"></div>
+      <div class="sheet-content">
+        <h2 class="sheet-title" id="sourceSheetTitle">添加片源</h2>
+        <p class="sheet-copy" id="sourceSheetCopy">保存为独立配置档案，可随时切换。</p>
+        <input type="hidden" id="sourceId">
+        <label class="field">
+          <span class="field-label">片源名称</span>
+          <input id="sourceName" type="text" maxlength="100" autocomplete="off" placeholder="例如：家庭主源">
+        </label>
+        <label class="field">
+          <span class="field-label">TVBox 配置地址</span>
+          <input id="sourceUrl" type="url" maxlength="2048" autocomplete="off" autocapitalize="off"
+            spellcheck="false" inputmode="url" placeholder="https://example.com/tvbox.json">
+        </label>
+        <label class="field">
+          <span class="field-label">User-Agent（可选）</span>
+          <input id="sourceUserAgent" type="text" maxlength="1024" autocomplete="off"
+            autocapitalize="off" spellcheck="false" placeholder="留空使用系统默认值">
+        </label>
+        <div class="sheet-toggle" id="activateToggleRow">
+          <div class="row-copy">
+            <p class="row-title">保存后立即启用</p>
+            <p class="row-help">电视会重新下载并验证配置。</p>
+          </div>
+          <button class="switch" id="activateSwitch" type="button" role="switch" aria-checked="true"></button>
+        </div>
+        <div class="sheet-actions">
+          <button class="large-button" id="cancelSourceButton" type="button">取消</button>
+          <button class="large-button primary" id="saveSourceButton" type="button">保存</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="sheet-layer" id="confirmSheet" aria-hidden="true">
+    <section class="sheet" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+      <div class="sheet-grabber"></div>
+      <div class="sheet-content">
+        <div class="confirm-icon">!</div>
+        <h2 class="sheet-title" id="confirmTitle">删除片源？</h2>
+        <p class="sheet-copy" id="confirmCopy">此操作只会删除本地保存的配置档案。</p>
+        <div class="sheet-actions">
+          <button class="large-button" id="cancelConfirmButton" type="button">取消</button>
+          <button class="large-button destructive" id="confirmDeleteButton" type="button">删除</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    (() => {
+      const token = new URLSearchParams(location.search).get("t") || "";
+      const elements = {
+        connectionDot: document.getElementById("connectionDot"),
+        connectionText: document.getElementById("connectionText"),
+        deviceName: document.getElementById("deviceName"),
+        versionName: document.getElementById("versionName"),
+        sourceList: document.getElementById("sourceList"),
+        addSourceButton: document.getElementById("addSourceButton"),
+        autoNext: document.getElementById("autoNextSwitch"),
+        resume: document.getElementById("resumeSwitch"),
+        decoder: document.getElementById("decoderSwitch"),
+        seek: document.getElementById("seekSegment"),
+        scale: document.getElementById("scaleSegment"),
+        themeGrid: document.getElementById("themeGrid"),
+        liveTitle: document.getElementById("liveTitle"),
+        liveNames: document.getElementById("liveNames"),
+        toast: document.getElementById("toast"),
+        sourceSheet: document.getElementById("sourceSheet"),
+        sourceSheetTitle: document.getElementById("sourceSheetTitle"),
+        sourceSheetCopy: document.getElementById("sourceSheetCopy"),
+        sourceId: document.getElementById("sourceId"),
+        sourceName: document.getElementById("sourceName"),
+        sourceUrl: document.getElementById("sourceUrl"),
+        sourceUserAgent: document.getElementById("sourceUserAgent"),
+        activateToggleRow: document.getElementById("activateToggleRow"),
+        activateSwitch: document.getElementById("activateSwitch"),
+        saveSource: document.getElementById("saveSourceButton"),
+        confirmSheet: document.getElementById("confirmSheet"),
+        confirmTitle: document.getElementById("confirmTitle"),
+        confirmCopy: document.getElementById("confirmCopy"),
+        confirmDelete: document.getElementById("confirmDeleteButton")
+      };
+
+      let state = null;
+      let mutating = false;
+      let deleteTarget = null;
+      let toastTimer = 0;
+      let pollTimer = 0;
+
+      function api(path) {
+        return path + (path.includes("?") ? "&" : "?") + "t=" + encodeURIComponent(token);
+      }
+
+      async function request(path, body) {
+        const options = {
+          cache: "no-store",
+          headers: { "Accept": "application/json" }
+        };
+        if (body !== undefined) {
+          options.method = "POST";
+          options.headers["Content-Type"] = "application/json";
+          options.body = JSON.stringify(body);
+        }
+        const response = await fetch(api(path), options);
+        const result = await response.json().catch(() => null);
+        if (!response.ok || !result || result.ok === false) {
+          throw new Error(result && result.message ? result.message : "无法连接电视");
+        }
+        return result;
+      }
+
+      function showToast(message, duration = 2300) {
+        clearTimeout(toastTimer);
+        elements.toast.textContent = message;
+        elements.toast.classList.add("visible");
+        toastTimer = setTimeout(() => elements.toast.classList.remove("visible"), duration);
+      }
+
+      function setConnected(connected, text) {
+        elements.connectionDot.classList.toggle("offline", !connected);
+        elements.connectionText.textContent = text;
+      }
+
+      function create(tag, className, text) {
+        const node = document.createElement(tag);
+        if (className) node.className = className;
+        if (text !== undefined) node.textContent = text;
+        return node;
+      }
+
+      function renderSources(sources) {
+        elements.sourceList.replaceChildren();
+        if (!sources.length) {
+          elements.sourceList.append(create("div", "card empty", "尚未配置片源"));
+          return;
+        }
+        sources.forEach((source, index) => {
+          const card = create("article", "source-card" + (source.active ? " active" : ""));
+          const head = create("div", "source-head");
+          head.append(create("div", "source-index", String(index + 1).padStart(2, "0")));
+          const copy = create("div", "row-copy");
+          copy.append(create("h3", "source-name", source.name || "未命名片源"));
+          copy.append(create("p", "source-url", source.url));
+          head.append(copy);
+          head.append(create("span", "badge", source.active ? "使用中" : "已保存"));
+          card.append(head);
+
+          const actions = create("div", "source-actions");
+          if (!source.active) {
+            const activate = create("button", "small-button primary", "启用");
+            activate.type = "button";
+            activate.addEventListener("click", () => activateSource(source));
+            actions.append(activate);
+          } else {
+            const refresh = create("button", "small-button", "重新加载");
+            refresh.type = "button";
+            refresh.addEventListener("click", refreshCurrentSource);
+            actions.append(refresh);
+          }
+          const edit = create("button", "small-button", "编辑");
+          edit.type = "button";
+          edit.addEventListener("click", () => openSourceSheet(source));
+          actions.append(edit);
+          if (!source.active) {
+            const remove = create("button", "small-button danger", "删除");
+            remove.type = "button";
+            remove.addEventListener("click", () => askDeleteSource(source));
+            actions.append(remove);
+          }
+          card.append(actions);
+          elements.sourceList.append(card);
+        });
+      }
+
+      function setSwitch(element, enabled) {
+        element.setAttribute("aria-checked", enabled ? "true" : "false");
+      }
+
+      function selectSegment(container, value) {
+        container.querySelectorAll("button").forEach((button) => {
+          button.classList.toggle("selected", Number(button.dataset.value) === Number(value));
+        });
+      }
+
+      function renderThemes(themes, selectedKey) {
+        elements.themeGrid.replaceChildren();
+        themes.forEach((theme) => {
+          const button = create("button", "theme-option" + (theme.key === selectedKey ? " selected" : ""));
+          button.type = "button";
+          button.dataset.theme = theme.key;
+          const dot = create("span", "theme-dot");
+          dot.style.background = theme.color;
+          button.append(dot, create("span", "", theme.label));
+          button.addEventListener("click", () => savePreferences({ themeKey: theme.key }));
+          elements.themeGrid.append(button);
+        });
+      }
+
+      function renderLive(live) {
+        elements.liveTitle.textContent = live.count > 0
+          ? `已加载 ${live.count} 个直播源`
+          : "当前配置没有直播源";
+        elements.liveNames.replaceChildren();
+        (live.names || []).slice(0, 8).forEach((name) => {
+          elements.liveNames.append(create("span", "live-name", name));
+        });
+      }
+
+      function render(nextState) {
+        state = nextState;
+        const preferences = state.preferences || {};
+        document.documentElement.dataset.theme = preferences.themeKey || "gold";
+        elements.deviceName.textContent = state.device || "Android TV";
+        elements.versionName.textContent = state.version ? "TVBox " + state.version : "TVBox";
+        setConnected(!state.mutationBlocked,
+          state.mutationBlocked ? "电视正在验证，请稍候" : "已连接 · 手机设置");
+        renderSources(state.sources || []);
+        renderThemes(state.themes || [], preferences.themeKey);
+        renderLive(state.live || { count: 0, names: [] });
+        setSwitch(elements.autoNext, !!preferences.autoNext);
+        setSwitch(elements.resume, !!preferences.resume);
+        setSwitch(elements.decoder, !!preferences.decoderFallback);
+        selectSegment(elements.seek, preferences.seekStep || 10);
+        selectSegment(elements.scale, preferences.videoScale || 0);
+      }
+
+      async function loadState(silent = false) {
+        if (!silent) setConnected(false, "正在连接电视");
+        try {
+          const nextState = await request("/api/state");
+          render(nextState);
+          return nextState;
+        } catch (error) {
+          setConnected(false, "连接已断开");
+          if (!silent) showToast(error.message, 3600);
+          throw error;
+        }
+      }
+
+      async function savePreferences(patch) {
+        if (mutating) return;
+        mutating = true;
+        const previous = state;
+        state = {
+          ...state,
+          preferences: { ...state.preferences, ...patch }
+        };
+        render(state);
+        try {
+          const result = await request("/api/preferences", patch);
+          render(result.state || await loadState(true));
+          if (result.themeChanged) {
+            showToast("主题已保存，返回电视后生效", 3200);
+          } else {
+            showToast(result.message || "设置已保存");
+          }
+        } catch (error) {
+          if (previous) render(previous);
+          showToast(error.message, 3600);
+        } finally {
+          mutating = false;
+        }
+      }
+
+      async function activateSource(source) {
+        if (mutating) return;
+        mutating = true;
+        setConnected(false, "正在启用片源");
+        try {
+          const result = await request("/api/source/activate", { id: source.id });
+          render(result.state || await loadState(true));
+          showToast(result.message || "片源已启用", 3000);
+          setTimeout(() => loadState(true).catch(() => {}), 4200);
+        } catch (error) {
+          showToast(error.message, 3600);
+          await loadState(true).catch(() => {});
+        } finally {
+          mutating = false;
+        }
+      }
+
+      async function refreshCurrentSource() {
+        if (mutating) return;
+        mutating = true;
+        setConnected(false, "正在重新加载");
+        try {
+          const result = await request("/api/config/refresh", {});
+          showToast(result.message || "正在重新加载", 3000);
+          setTimeout(() => loadState(true).catch(() => {}), 4200);
+        } catch (error) {
+          showToast(error.message, 3600);
+        } finally {
+          mutating = false;
+        }
+      }
+
+      function setSheetOpen(sheet, open) {
+        sheet.classList.toggle("open", open);
+        sheet.setAttribute("aria-hidden", open ? "false" : "true");
+        document.body.style.overflow = open ? "hidden" : "";
+      }
+
+      function openSourceSheet(source) {
+        const editing = !!source;
+        elements.sourceSheetTitle.textContent = editing ? "编辑片源" : "添加片源";
+        elements.sourceSheetCopy.textContent = editing
+          ? "修改当前在用地址后，电视会重新下载并验证配置。"
+          : "保存为独立配置档案，可随时切换。";
+        elements.sourceId.value = editing ? source.id : "";
+        elements.sourceName.value = editing ? source.name : "";
+        elements.sourceUrl.value = editing ? source.url : "https://9280.kstore.vip/aiwex.json";
+        elements.sourceUserAgent.value = editing ? source.userAgent : "";
+        const active = editing && source.active;
+        elements.activateToggleRow.hidden = active;
+        elements.activateSwitch.setAttribute("aria-checked", active ? "false" : "true");
+        setSheetOpen(elements.sourceSheet, true);
+        setTimeout(() => elements.sourceName.focus({ preventScroll: true }), 220);
+      }
+
+      function closeSourceSheet() {
+        setSheetOpen(elements.sourceSheet, false);
+        elements.saveSource.disabled = false;
+      }
+
+      async function saveSource() {
+        if (mutating) return;
+        const id = elements.sourceId.value;
+        const name = elements.sourceName.value.trim();
+        const url = elements.sourceUrl.value.trim();
+        const userAgent = elements.sourceUserAgent.value.trim();
+        if (!url) {
+          elements.sourceUrl.focus();
+          showToast("请填写 TVBox 配置地址");
+          return;
+        }
+        mutating = true;
+        elements.saveSource.disabled = true;
+        try {
+          const result = await request("/api/source", {
+            id,
+            name,
+            url,
+            userAgent,
+            activate: elements.activateSwitch.getAttribute("aria-checked") === "true"
+          });
+          closeSourceSheet();
+          render(result.state || await loadState(true));
+          showToast(result.message || "片源已保存", 3000);
+          if (result.requiresReload) setTimeout(() => loadState(true).catch(() => {}), 4200);
+        } catch (error) {
+          showToast(error.message, 3600);
+        } finally {
+          mutating = false;
+          elements.saveSource.disabled = false;
+        }
+      }
+
+      function askDeleteSource(source) {
+        deleteTarget = source;
+        elements.confirmTitle.textContent = `删除“${source.name}”？`;
+        elements.confirmCopy.textContent = "只会移除手机和电视上保存的配置档案，不会修改远程 TVBox 配置。";
+        setSheetOpen(elements.confirmSheet, true);
+      }
+
+      async function deleteSource() {
+        if (!deleteTarget || mutating) return;
+        mutating = true;
+        elements.confirmDelete.disabled = true;
+        try {
+          const result = await request("/api/source/delete", { id: deleteTarget.id });
+          setSheetOpen(elements.confirmSheet, false);
+          deleteTarget = null;
+          render(result.state || await loadState(true));
+          showToast(result.message || "片源已删除");
+        } catch (error) {
+          showToast(error.message, 3600);
+        } finally {
+          mutating = false;
+          elements.confirmDelete.disabled = false;
+        }
+      }
+
+      function togglePreference(id, key) {
+        const button = elements[id];
+        const enabled = button.getAttribute("aria-checked") !== "true";
+        savePreferences({ [key]: enabled });
+      }
+
+      elements.autoNext.addEventListener("click", () => togglePreference("autoNext", "autoNext"));
+      elements.resume.addEventListener("click", () => togglePreference("resume", "resume"));
+      elements.decoder.addEventListener("click", () => togglePreference("decoder", "decoderFallback"));
+
+      elements.seek.addEventListener("click", (event) => {
+        const button = event.target.closest("button[data-value]");
+        if (button) savePreferences({ seekStep: Number(button.dataset.value) });
+      });
+
+      elements.scale.addEventListener("click", (event) => {
+        const button = event.target.closest("button[data-value]");
+        if (button) savePreferences({ videoScale: Number(button.dataset.value) });
+      });
+
+      elements.addSourceButton.addEventListener("click", () => openSourceSheet(null));
+      document.getElementById("cancelSourceButton").addEventListener("click", closeSourceSheet);
+      elements.saveSource.addEventListener("click", saveSource);
+      elements.activateSwitch.addEventListener("click", () => {
+        const enabled = elements.activateSwitch.getAttribute("aria-checked") === "true";
+        elements.activateSwitch.setAttribute("aria-checked", enabled ? "false" : "true");
+      });
+      document.getElementById("cancelConfirmButton").addEventListener("click", () => {
+        deleteTarget = null;
+        setSheetOpen(elements.confirmSheet, false);
+      });
+      elements.confirmDelete.addEventListener("click", deleteSource);
+
+      elements.sourceSheet.addEventListener("click", (event) => {
+        if (event.target === elements.sourceSheet) closeSourceSheet();
+      });
+      elements.confirmSheet.addEventListener("click", (event) => {
+        if (event.target === elements.confirmSheet) {
+          deleteTarget = null;
+          setSheetOpen(elements.confirmSheet, false);
+        }
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          closeSourceSheet();
+          deleteTarget = null;
+          setSheetOpen(elements.confirmSheet, false);
+        }
+      });
+
+      function schedulePoll() {
+        clearInterval(pollTimer);
+        pollTimer = setInterval(() => {
+          if (document.hidden || mutating || elements.sourceSheet.classList.contains("open")
+              || elements.confirmSheet.classList.contains("open")) return;
+          loadState(true).catch(() => setConnected(false, "连接已断开"));
+        }, 6000);
+      }
+
+      loadState().then(schedulePoll).catch(() => schedulePoll());
+    })();
+  </script>
+</body>
+</html>

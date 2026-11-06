@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.TvApp" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionModeOverlay">true</item>
+        <item name="android:windowBackground">@color/bg_base</item>
+        <item name="android:colorAccent">@color/accent_gold</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="tvAccent">#FFFFFF</item>
+        <item name="tvAccentOn">#050506</item>
+        <item name="tvAccentLight">#FFFFFF</item>
+        <item name="tvAccentMid">#E5E5EA</item>
+        <item name="tvAccentDark">#A1A1A6</item>
+        <item name="tvAccentSoft">#29FFFFFF</item>
+        <item name="tvAccentGlow">#10FFFFFF</item>
+    </style>
+
+    <style name="Theme.TvApp.Gold" parent="Theme.TvApp">
+        <item name="tvAccent">#FFFFFF</item>
+        <item name="tvAccentOn">#050506</item>
+        <item name="tvAccentLight">#FFFFFF</item>
+        <item name="tvAccentMid">#E5E5EA</item>
+        <item name="tvAccentDark">#A1A1A6</item>
+        <item name="tvAccentSoft">#29FFFFFF</item>
+        <item name="tvAccentGlow">#10FFFFFF</item>
+    </style>
+
+    <style name="Theme.TvApp.Teal" parent="Theme.TvApp">
+        <item name="tvAccent">#64D2FF</item>
+        <item name="tvAccentOn">#061419</item>
+        <item name="tvAccentLight">#DDF6FF</item>
+        <item name="tvAccentMid">#8DE1FF</item>
+        <item name="tvAccentDark">#2DA8DB</item>
+        <item name="tvAccentSoft">#2E64D2FF</item>
+        <item name="tvAccentGlow">#1464D2FF</item>
+        <item name="android:colorAccent">@color/accent_teal</item>
+    </style>
+
+    <style name="Theme.TvApp.Coral" parent="Theme.TvApp">
+        <item name="tvAccent">#FF8A7A</item>
+        <item name="tvAccentOn">#1A0805</item>
+        <item name="tvAccentLight">#FFE2DD</item>
+        <item name="tvAccentMid">#FFAB9F</item>
+        <item name="tvAccentDark">#D96052</item>
+        <item name="tvAccentSoft">#2EFF8A7A</item>
+        <item name="tvAccentGlow">#14FF8A7A</item>
+        <item name="android:colorAccent">@color/accent_coral</item>
+    </style>
+
+    <style name="Theme.TvApp.Blue" parent="Theme.TvApp">
+        <item name="tvAccent">#0A84FF</item>
+        <item name="tvAccentOn">#FFFFFF</item>
+        <item name="tvAccentLight">#77BDFF</item>
+        <item name="tvAccentMid">#3D9DFF</item>
+        <item name="tvAccentDark">#0068CC</item>
+        <item name="tvAccentSoft">#2E0A84FF</item>
+        <item name="tvAccentGlow">#140A84FF</item>
+        <item name="android:colorAccent">@color/accent_blue</item>
+    </style>
+
+    <style name="Theme.TvApp.Green" parent="Theme.TvApp">
+        <item name="tvAccent">#63E6BE</item>
+        <item name="tvAccentOn">#061713</item>
+        <item name="tvAccentLight">#D8FFF5</item>
+        <item name="tvAccentMid">#8CF0D0</item>
+        <item name="tvAccentDark">#32B895</item>
+        <item name="tvAccentSoft">#2E63E6BE</item>
+        <item name="tvAccentGlow">#1463E6BE</item>
+        <item name="android:colorAccent">@color/accent_green</item>
+    </style>
+</resources>

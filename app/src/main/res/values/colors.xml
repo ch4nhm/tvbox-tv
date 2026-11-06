@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="bg_base">#050506</color>
+    <color name="bg_elevated">#151517</color>
+    <color name="bg_grouped">#141416</color>
+    <color name="bg_control">#2C2C2E</color>
+    <color name="text_primary">#F5F5F7</color>
+    <color name="text_secondary">#A1A1A6</color>
+    <color name="text_muted">#6E6E73</color>
+    <color name="text_nav">#B8B8BC</color>
+    <color name="accent">#F5F5F7</color>
+    <color name="nav_active_text">#050506</color>
+    <color name="accent_gold">#F5F5F7</color>
+    <color name="accent_teal">#64D2FF</color>
+    <color name="accent_coral">#FF8A7A</color>
+    <color name="accent_blue">#0A84FF</color>
+    <color name="accent_green">#63E6BE</color>
+    <color name="white">#FFFFFF</color>
+    <color name="progress_track">#4DFFFFFF</color>
+    <color name="card_stroke">#24FFFFFF</color>
+    <color name="divider">#29FFFFFF</color>
+    <color name="live_accent">#FF453A</color>
+    <color name="glass_surface">#B8141416</color>
+    <color name="glass_surface_strong">#E6101012</color>
+    <color name="surface_chip">#1FFFFFFF</color>
+    <color name="surface_chip_selected">#2E2E31</color>
+</resources>

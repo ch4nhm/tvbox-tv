@@ -1,0 +1,33 @@
+# Android / Gradle
+.gradle/
+build/
+**/build/
+local.properties
+*.iml
+.idea/
+.cxx/
+.externalNativeBuild/
+*.idsig
+
+# Distribution artifacts
+# Published through GitHub Releases and never committed to source control.
+dist/*
+
+# Signing material
+*.jks
+*.keystore
+
+# Local TVBox sources and audit output
+source/*
+!source/.gitkeep
+docs/source-audit.md
+
+# Scratch files
+work/*
+!work/.gitkeep
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+

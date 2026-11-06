@@ -1,0 +1,75 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.ch4nhm.tvapp'
+    compileSdk 37
+    buildToolsVersion '37.0.0'
+
+    defaultConfig {
+        applicationId 'com.ch4nhm.tvapp'
+        minSdk 24
+        targetSdk 37
+        versionCode 37
+        versionName '1.1.0'
+    }
+
+    compileOptions {
+        coreLibraryDesugaringEnabled true
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
+    }
+
+    buildFeatures {
+        buildConfig false
+    }
+
+    packaging {
+        resources {
+            excludes += [
+                    'META-INF/DEPENDENCIES',
+                    'META-INF/LICENSE',
+                    'META-INF/LICENSE.txt',
+                    'META-INF/NOTICE',
+                    'META-INF/NOTICE.txt',
+                    'META-INF/INDEX.LIST'
+            ]
+        }
+    }
+
+    lint {
+        abortOnError false
+    }
+
+    buildTypes {
+        release {
+            // Keep update compatibility with existing installations.
+            signingConfig signingConfigs.debug
+        }
+    }
+}
+
+dependencies {
+    implementation project(':catvod')
+    implementation(project(':spider')) {
+        exclude group: 'com.google.code.gson'
+    }
+    implementation 'androidx.appcompat:appcompat:1.8.0'
+    implementation 'androidx.recyclerview:recyclerview:1.4.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
+    implementation 'com.google.android.material:material:1.14.0'
+    implementation 'com.google.code.gson:gson:2.14.0'
+    implementation 'com.google.zxing:core:3.5.4'
+    implementation 'com.belerweb:pinyin4j:2.5.1'
+    implementation 'com.github.bumptech.glide:glide:5.0.9'
+    annotationProcessor 'com.github.bumptech.glide:compiler:5.0.9'
+    implementation "androidx.media3:media3-exoplayer:1.11.1"
+    implementation "androidx.media3:media3-exoplayer-dash:1.11.1"
+    implementation "androidx.media3:media3-exoplayer-hls:1.11.1"
+    implementation "androidx.media3:media3-exoplayer-rtsp:1.11.1"
+    implementation "androidx.media3:media3-ui:1.11.1"
+    implementation "androidx.media3:media3-datasource-okhttp:1.11.1"
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs_nio:2.1.5'
+    testImplementation 'junit:junit:4.13.2'
+}

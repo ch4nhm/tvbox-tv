@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="14dp"
+    android:layout_marginBottom="22dp"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <com.ch4nhm.tvapp.RoundedFrameLayout
+        android:id="@+id/live_channel_card"
+        android:layout_width="match_parent"
+        android:layout_height="118dp"
+        android:background="@drawable/bg_live_logo"
+        android:clipChildren="true"
+        android:clipToOutline="true"
+        android:clickable="false"
+        android:focusable="false"
+        app:surfaceCornerRadius="22dp">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/live_channel_initial"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="sans-serif-black"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:letterSpacing="-0.03"
+                android:maxLines="1"
+                android:textColor="#30FFFFFF"
+                android:textSize="34sp" />
+
+            <ImageView
+                android:id="@+id/live_channel_logo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@null"
+                android:paddingStart="28dp"
+                android:paddingTop="24dp"
+                android:paddingEnd="28dp"
+                android:paddingBottom="24dp"
+                android:scaleType="fitCenter" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:alpha="0.34"
+                android:background="@drawable/bg_card_scrim"
+                android:importantForAccessibility="no" />
+
+            <View
+                android:id="@+id/focus_outline"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:alpha="0"
+                android:background="@drawable/bg_focus_outline_live"
+                android:importantForAccessibility="no" />
+
+        </FrameLayout>
+
+    </com.ch4nhm.tvapp.RoundedFrameLayout>
+
+    <TextView
+        android:id="@+id/live_channel_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="11dp"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-medium"
+        android:includeFontPadding="false"
+        android:maxLines="1"
+        android:textColor="@color/text_primary"
+        android:textSize="19sp" />
+
+</LinearLayout>

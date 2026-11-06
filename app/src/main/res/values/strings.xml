@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TVBox</string>
+    <string name="nav_home">首页</string>
+    <string name="nav_movie">电影</string>
+    <string name="nav_tv">电视剧</string>
+    <string name="nav_variety">综艺</string>
+    <string name="nav_anime">动漫</string>
+    <string name="nav_live">直播</string>
+    <string name="nav_mine">我的</string>
+    <string name="hero_title">长月烬明</string>
+    <string name="hero_title_en">TILL THE END OF THE MOON</string>
+    <string name="hero_desc">为争夺神魔之力，澹台烬与黎苏苏跨越千年\n纠葛不断，宿命轮回，爱恨交织。</string>
+    <string name="hero_play">继续播放</string>
+    <string name="hero_detail">详情</string>
+    <string name="continue_watching">继续观看</string>
+    <string name="featured">精选推荐</string>
+    <string name="watch_progress">观看至 %1$d%%</string>
+    <string name="search">搜索</string>
+    <string name="history">播放记录</string>
+    <string name="settings">设置</string>
+    <string name="placeholder_action">%1$s（原型占位）</string>
+</resources>

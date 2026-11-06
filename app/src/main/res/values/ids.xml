@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="image_request_token" type="id" />
+    <item name="image_fallback_token" type="id" />
+    <item name="safe_area_base_padding" type="id" />
+</resources>
